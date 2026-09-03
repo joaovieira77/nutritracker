@@ -1,82 +1,172 @@
-🍽️ Nutri Tracker — Personal Health & Nutrition Tracking App
+# 🍽️ Nutri Tracker
 
-Nutri Tracker is a personal web application designed to simplify daily health tracking. It helps users log meals, exercise, sleep, water intake and weight in a fast, frictionless way, and consolidates that data into a shareable weekly report — built for tracking progress with a nutritionist.
+> A personal health & nutrition tracking app designed to simplify daily tracking and make progress easier to share with a nutritionist.
 
--Nutri Tracker is currently in development (WIP).
--The project is being fully built by me, covering both frontend and data layer.
+**Nutri Tracker** is a personal web application I’m building to centralize daily health tracking in one place. It allows users to log **meals, calories and macros, exercise, sleep, water intake, weight and daily notes**, while automatically generating a weekly report that can be exported as a PDF.
 
-🌐 Live Overview
+The project was born from a real personal need while working with a nutritionist and is being fully designed and developed by me.
 
-Nutri Tracker is a single-page Next.js application (no backend/server required):
-    Frontend: Built with React (App Router) and TypeScript, styled with Tailwind CSS.
-    Data layer: Client-side persistence via browser localStorage — no login, no server, single device.
+> 🚧 **Status:** Work in Progress
 
-⚙️ Tech Stack
+---
 
-Layer          Technology
-Framework      Next.js 14 (App Router)
-Language       TypeScript
-Styling        Tailwind CSS
-Fonts          next/font (Space Grotesk, Inter, JetBrains Mono)
-Persistence    Browser localStorage (per-day JSON records)
-Charts         Custom lightweight SVG (no external chart library)
+## ✨ Features
 
-🔐 Data & Privacy
+### 🍽️ Meal Tracking
 
-Nutri Tracker has no accounts and no backend. All data is:
-    Stored locally in the browser via localStorage, under keys like day:YYYY-MM-DD
-    Never sent to any server or third party
-    Confined to the browser/device where the app is used (no cross-device sync)
+* Log meals by type: breakfast, lunch, snack, dinner and other
+* Search a built-in food database
+* Automatic calorie and macronutrient calculations
+* Daily calorie and macro totals
 
-🧩 Core Features
+### 🏃 Exercise
 
-🍽️ Meal Logging
-    Log food by meal type (breakfast, lunch, snack, dinner, other)
-    Search a built-in food database (~70 items, incl. drinks/coffee/dairy)
-    Auto-calculated calories and macros (protein, carbs, fat) per entry and per day
+* Track different types of exercise
+* Record duration
+* Support for multiple activities per day
 
-🏃 Exercise
-    Log type + duration, multiple entries per day
+### 😴 Sleep
 
-😴 Sleep
-    Log bedtime and wake time, with automatic duration calculation
+* Record bedtime and wake-up time
+* Automatic sleep duration calculation
 
-💧 Water
-    Quick "+1 cup (250ml)" logging, or custom amount
+### 💧 Water
 
-⚖️ Weight (optional)
-    Log periodic weight, view evolution over time on a chart
+* Quick `+1 cup (250ml)` logging
+* Custom water amounts
+* Daily total
 
-📝 Daily Notes
-    Free-text observations per day, included in the weekly report
+### ⚖️ Weight
 
-📊 Weekly Report
-    Aggregated averages/totals: calories, macros, water, sleep, exercise, weight change, notes
-    Exportable via browser print → PDF, for sharing with a nutritionist
+* Optional weight tracking
+* Visualize weight evolution over time
 
-🗄️ Data Structure
+### 📝 Daily Notes
 
-Each day is stored as a single localStorage record (day:YYYY-MM-DD) containing:
-    meals — food entries grouped by meal type
-    exercises — list of {type, duration}
-    sleep — {bed, wake, durationMin} or null
-    water — total ml
-    weight — kg or null
-    notes — free text
+* Add observations and contextual information to each day
 
-🚀 Getting Started
+### 📊 Weekly Reports
 
-💻 Setup
+* Aggregate weekly nutrition and lifestyle data
+* Calories and macronutrient averages
+* Water, sleep and exercise statistics
+* Weight evolution
+* Daily notes
+* Export reports through the browser's print functionality as PDF
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer            | Technology              |
+| ---------------- | ----------------------- |
+| Framework        | Next.js 14 (App Router) |
+| Frontend         | React                   |
+| Language         | TypeScript              |
+| Styling          | Tailwind CSS            |
+| Data Persistence | Browser localStorage    |
+| Charts           | Custom SVG              |
+| Fonts            | next/font               |
+
+---
+
+## 🏗️ Architecture
+
+Nutri Tracker currently runs entirely on the client side.
+
+There is **no backend, authentication system or external database**. Daily records are persisted locally in the browser using structured JSON objects.
+
+Each day follows the `day:YYYY-MM-DD` storage pattern and contains:
+
+```text
+day
+├── meals
+│   ├── breakfast
+│   ├── lunch
+│   ├── snack
+│   ├── dinner
+│   └── other
+├── exercises
+├── sleep
+├── water
+├── weight
+└── notes
+```
+
+This architecture was intentionally chosen for the current use case: a personal, single-device application where the data does not need to leave the user's browser.
+
+---
+
+## 🔐 Privacy
+
+Privacy is an important part of the current architecture.
+
+* No user accounts
+* No backend
+* No external database
+* No third-party data transmission
+* Data remains stored locally in the browser
+* No cross-device synchronization
+
+The application is therefore currently designed around a **local-first approach**.
+
+---
+
+## 🚀 Getting Started
+
+### Requirements
+
+* Node.js
+* npm
+
+### Installation
+
+```bash
+git clone <repository-url>
 cd nutri-tracker-next
 npm install
+```
+
+### Development
+
+```bash
 npm run dev
+```
 
-Open http://localhost:3000
+Then open:
 
-🏗️ Production build
+```text
+http://localhost:3000
+```
+
+### Production
+
+```bash
 npm run build
 npm run start
+```
 
-Status
--Nutri Tracker is currently in development (WIP).
--The project is being fully built by me, covering both frontend and data architecture.
+---
+
+## 🗺️ Roadmap
+
+The project is currently being actively developed. Potential future improvements include:
+
+* [ ] More extensive food database
+* [ ] Improved data visualization
+* [ ] PWA / offline improvements
+* [ ] Data backup and import/export
+* [ ] Cloud synchronization
+* [ ] User authentication
+* [ ] Nutritionist/patient accounts
+* [ ] Secure report sharing
+* [ ] Backend API and persistent database
+
+---
+
+## 📌 Project Status
+
+Nutri Tracker is a **WIP personal project** and is continuously evolving.
+
+The frontend, application logic and current data architecture are being developed entirely by me.
+
