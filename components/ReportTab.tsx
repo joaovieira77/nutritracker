@@ -150,9 +150,9 @@ export default function ReportTab() {
                 key={e.id}
                 className={`flex justify-between py-1.5 text-[13px] ${i > 0 ? "border-t border-border" : ""}`}
               >
-                <span>
-                  {dayLabel(e.date)} · {e.type}
-                </span>
+               <span>
+  {parseDate(e.date).toLocaleDateString("pt-PT", { weekday: "short", day: "2-digit", month: "short" })} · {e.type}
+</span>
                 <span>{e.duration} min</span>
               </div>
             ))
