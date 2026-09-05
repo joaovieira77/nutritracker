@@ -194,6 +194,11 @@ const RAW: [string, number, number, number, number][] = [
   ["Vinho tinto", 85, 0.1, 2.6, 0],
   ["Água de coco", 19, 0.7, 3.7, 0.2],
   ["Chocolate quente (leite + cacau)", 85, 3.4, 10, 3.5],
+    // Pudins proteicos Milbona (Lidl)
+  ["Pudim proteico Milbona (baunilha)", 75, 10, 5.2, 1.6],
+  ["Pudim proteico Milbona (caramelo)", 75, 10, 5.2, 1.6],
+  ["Pudim proteico Milbona (avelã)", 75, 10, 5.2, 1.6],
+  ["Pudim proteico Milbona (chocolate)", 76, 10, 5.2, 1.6],
 ];
 
 function uid(): string {
