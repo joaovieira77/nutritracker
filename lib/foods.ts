@@ -15,6 +15,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Bulgur cozido", 83, 3, 19, 0.2],
   ["Cuscuz cozido", 112, 3.8, 23, 0.2],
   ["Quinoa cozida", 120, 4.4, 21, 1.9],
+  ["Arroz de cenoura", 135, 2.5, 24, 3.2],
 
   // Batatas
   ["Batata cozida", 87, 1.9, 20, 0.1],
