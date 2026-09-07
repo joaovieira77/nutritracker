@@ -41,6 +41,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Fiambre de peru", 104, 17, 2, 3],
   ["Salsicha", 301, 12, 3, 27],
   ["Chouriço", 455, 24, 2, 38],
+  
 // Mais frango e peru
   ["Bife de frango grelhado", 165, 31, 0, 3.6],
   ["Escalope de frango grelhado", 155, 30, 0, 3.5],
@@ -59,6 +60,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Peru assado (com pele)", 170, 28, 0, 6],
   ["Hambúrguer de peru", 180, 21, 2, 10],
   ["Salsicha de frango/peru", 180, 13, 3, 13],
+  ["Perna de frango estufada (no tacho)", 195, 22, 3, 10],
   // Peixe e marisco
   ["Peixe (pescada) cozido", 90, 18, 0, 1.3],
   ["Salmão grelhado", 208, 20, 0, 13],
