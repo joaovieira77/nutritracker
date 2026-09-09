@@ -52,3 +52,20 @@ export interface WeightPoint {
   date: string;
   weight: number;
 }
+
+export interface RecipeIngredient {
+  id: string;
+  name: string;
+  grams: number;
+  kcal: number;
+  p: number;
+  c: number;
+  f: number;
+}
+
+export interface Recipe {
+  id: string;
+  name: string;
+  ingredients: RecipeIngredient[];
+  finalWeight: number; // peso final do prato depois de cozinhado (g); 0 = usar soma dos ingredientes
+}

@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Modal, { ModalActions, FieldLabel, inputClass, btnGhost, btnPrimary } from "../Modal";
-import { searchFoods } from "@/lib/foods";
+import { searchAllFoods } from "@/lib/search";
 import { Food, FoodEntry, MEAL_TYPES, MealKey } from "@/lib/types";
 import { round1, uid } from "@/lib/date";
+import CreateFoodModal from "./CreateFoodModal";
 
 export function FoodSearchModal({
   mealKey,
@@ -16,36 +17,55 @@ export function FoodSearchModal({
   onPickFood: (food: Food) => void;
 }) {
   const [query, setQuery] = useState("");
-  const results = searchFoods(query);
+  const [creating, setCreating] = useState(false);
+  const results = searchAllFoods(query);
   const label = MEAL_TYPES.find((m) => m.key === mealKey)?.label ?? "";
 
   return (
-    <Modal title={`Adicionar a ${label}`} onClose={onClose} center={false}>
-      <input
-        autoFocus
-        type="text"
-        placeholder="Pesquisar alimento (ex: arroz, frango...)"
-        className={inputClass}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <div className="mt-1 max-h-[260px] overflow-y-auto rounded-[10px] border border-border">
-        {query.trim() === "" ? null : results.length ? (
-          results.map((f) => (
-            <div
-              key={f.id}
-              onClick={() => onPickFood(f)}
-              className="flex cursor-pointer justify-between border-b border-border px-3 py-2.5 text-[13.5px] last:border-b-0 active:bg-surface2"
-            >
-              <span>{f.name}</span>
-              <span className="font-num text-xs text-textmuted">{f.kcal} kcal/100g</span>
-            </div>
-          ))
-        ) : (
-          <div className="p-3 text-xs text-textfaint">Sem resultados. Tenta outro termo.</div>
-        )}
-      </div>
-    </Modal>
+    <>
+      <Modal title={`Adicionar a ${label}`} onClose={onClose} center={false}>
+        <input
+          autoFocus
+          type="text"
+          placeholder="Pesquisar alimento (ex: arroz, frango...)"
+          className={inputClass}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <div className="mt-1 max-h-[260px] overflow-y-auto rounded-[10px] border border-border">
+          {query.trim() === "" ? null : results.length ? (
+            results.map((f) => (
+              <div
+                key={f.id}
+                onClick={() => onPickFood(f)}
+                className="flex cursor-pointer justify-between border-b border-border px-3 py-2.5 text-[13.5px] last:border-b-0 active:bg-surface2"
+              >
+                <span>{f.name}</span>
+                <span className="font-num text-xs text-textmuted">{Math.round(f.kcal)} kcal/100g</span>
+              </div>
+            ))
+          ) : (
+            <div className="p-3 text-xs text-textfaint">Sem resultados. Tenta outro termo.</div>
+          )}
+        </div>
+        <button
+          className="mt-2.5 w-full rounded-[10px] border border-dashed border-border px-3 py-2.5 text-left text-[13px] text-textmuted active:border-red active:text-red"
+          onClick={() => setCreating(true)}
+        >
+          + Criar alimento{query.trim() ? ` "${query.trim()}"` : ""}
+        </button>
+      </Modal>
+      {creating && (
+        <CreateFoodModal
+          initialName={query.trim()}
+          onClose={() => setCreating(false)}
+          onCreated={(food) => {
+            setCreating(false);
+            onPickFood(food);
+          }}
+        />
+      )}
+    </>
   );
 }
 
