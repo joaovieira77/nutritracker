@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DayData, Food, FoodEntry, MEAL_TYPES, MealKey } from "@/lib/types";
+import { DayData, Food, FoodEntry, MEAL_TYPES, MealKey, BloodPressureEntry } from "@/lib/types";
 import { getDay, saveDay } from "@/lib/storage";
 import { addDays, dayLabel, fmtDurationH, round1, todayStr } from "@/lib/date";
 import { FoodSearchModal, QuantityModal } from "./modals/FoodModals";
-import { WaterModal, ExerciseModal, SleepModal, WeightModal } from "./modals/EntryModals";
+import { WaterModal, ExerciseModal, SleepModal, WeightModal, BloodPressureModal } from "./modals/EntryModals";
 
 type ModalState =
   | { kind: "none" }
@@ -14,7 +14,8 @@ type ModalState =
   | { kind: "water" }
   | { kind: "exercise" }
   | { kind: "sleep" }
-  | { kind: "weight" };
+  | { kind: "weight" }
+  | { kind: "bloodPressure" };
 
 export default function TodayTab() {
   const [currentDate, setCurrentDate] = useState(todayStr());
@@ -217,6 +218,48 @@ export default function TodayTab() {
         )}
       </div>
 
+      <SectionTitle
+        action={
+          <button className="text-[13px] font-semibold text-red" onClick={() => setModal({ kind: "bloodPressure" })}>
+            + adicionar
+          </button>
+        }
+      >
+        Tensão arterial
+      </SectionTitle>
+      <div className="rounded-card border border-border bg-surface p-4">
+        {day.bloodPressure.length ? (
+          day.bloodPressure.map((bp, i) => (
+            <div
+              key={bp.id}
+              className={`flex items-center justify-between py-2 text-[13px] ${i > 0 ? "border-t border-border" : ""}`}
+            >
+              <span className="text-textmuted">{bp.time}</span>
+              <span className="flex items-center gap-2">
+                <span className="font-num font-semibold">
+                  {bp.systolic}/{bp.diastolic} <span className="font-body font-normal text-textmuted">mmHg</span>
+                </span>
+                {bp.pulse !== null && (
+                  <span className="font-num text-textmuted">{bp.pulse} bpm</span>
+                )}
+                <button
+                  className="px-0.5 text-base text-textfaint"
+                  onClick={() =>
+                    mutate((d) => {
+                      d.bloodPressure = d.bloodPressure.filter((x) => x.id !== bp.id);
+                    })
+                  }
+                >
+                  ×
+                </button>
+              </span>
+            </div>
+          ))
+        ) : (
+          <div className="text-xs text-textfaint">Sem medições registadas.</div>
+        )}
+      </div>
+
       <SectionTitle>Sono &amp; Peso</SectionTitle>
       <div className="grid grid-cols-2 gap-3">
         <div
@@ -340,6 +383,17 @@ export default function TodayTab() {
           onConfirm={(w) => {
             mutate((d) => {
               d.weight = w;
+            });
+            closeModal();
+          }}
+        />
+      )}
+      {modal.kind === "bloodPressure" && (
+        <BloodPressureModal
+          onClose={closeModal}
+          onConfirm={(entry: BloodPressureEntry) => {
+            mutate((d) => {
+              d.bloodPressure.push(entry);
             });
             closeModal();
           }}

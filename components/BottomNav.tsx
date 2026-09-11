@@ -1,6 +1,6 @@
 "use client";
 
-export type Tab = "today" | "weight" | "report" | "more";
+export type Tab = "today" | "weight" | "bloodPressure" | "report" | "more";
 
 const ITEMS: { tab: Tab; label: string; icon: React.ReactNode }[] = [
   {
@@ -14,6 +14,11 @@ const ITEMS: { tab: Tab; label: string; icon: React.ReactNode }[] = [
     tab: "weight",
     label: "Peso",
     icon: <path d="M4 20h16M6 20V10l6-6 6 6v10" />,
+  },
+  {
+    tab: "bloodPressure",
+    label: "Tensão",
+    icon: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />,
   },
   {
     tab: "report",

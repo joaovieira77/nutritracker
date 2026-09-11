@@ -39,6 +39,14 @@ export interface SleepEntry {
   durationMin: number;
 }
 
+export interface BloodPressureEntry {
+  id: string;
+  time: string; // HH:mm
+  systolic: number; // mmHg
+  diastolic: number; // mmHg
+  pulse: number | null; // bpm, opcional
+}
+
 export interface DayData {
   meals: Record<MealKey, FoodEntry[]>;
   exercises: ExerciseEntry[];
@@ -46,6 +54,7 @@ export interface DayData {
   water: number; // ml
   weight: number | null; // kg
   notes: string; // observações livres do dia
+  bloodPressure: BloodPressureEntry[];
 }
 
 export interface WeightPoint {

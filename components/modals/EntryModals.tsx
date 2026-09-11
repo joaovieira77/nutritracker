@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Modal, { ModalActions, FieldLabel, inputClass, btnGhost, btnPrimary } from "../Modal";
-import { ExerciseEntry, SleepEntry } from "@/lib/types";
+import { ExerciseEntry, SleepEntry, BloodPressureEntry } from "@/lib/types";
 import { fmtDurationH, uid } from "@/lib/date";
 
 export function WaterModal({
@@ -163,6 +163,82 @@ export function WeightModal({
           className={`${btnPrimary} flex-1`}
           onClick={() => {
             if (value && value > 0) onConfirm(value);
+          }}
+        >
+          Guardar
+        </button>
+      </ModalActions>
+    </Modal>
+  );
+}
+
+export function BloodPressureModal({
+  onClose,
+  onConfirm,
+}: {
+  onClose: () => void;
+  onConfirm: (entry: BloodPressureEntry) => void;
+}) {
+  const [systolic, setSystolic] = useState<number | undefined>(undefined);
+  const [diastolic, setDiastolic] = useState<number | undefined>(undefined);
+  const [pulse, setPulse] = useState<number | undefined>(undefined);
+  const [time, setTime] = useState(() => {
+    const now = new Date();
+    return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  });
+
+  const valid = systolic !== undefined && systolic > 0 && diastolic !== undefined && diastolic > 0;
+
+  return (
+    <Modal title="Registar tensão arterial" onClose={onClose}>
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <FieldLabel>Sistólica (mmHg)</FieldLabel>
+          <input
+            type="number"
+            min={1}
+            inputMode="numeric"
+            placeholder="ex: 120"
+            className={inputClass}
+            value={systolic ?? ""}
+            onChange={(e) => setSystolic(e.target.value ? parseFloat(e.target.value) : undefined)}
+          />
+        </div>
+        <div>
+          <FieldLabel>Diastólica (mmHg)</FieldLabel>
+          <input
+            type="number"
+            min={1}
+            inputMode="numeric"
+            placeholder="ex: 80"
+            className={inputClass}
+            value={diastolic ?? ""}
+            onChange={(e) => setDiastolic(e.target.value ? parseFloat(e.target.value) : undefined)}
+          />
+        </div>
+      </div>
+      <FieldLabel>Pulsação (bpm) — opcional</FieldLabel>
+      <input
+        type="number"
+        min={1}
+        inputMode="numeric"
+        placeholder="ex: 72"
+        className={inputClass}
+        value={pulse ?? ""}
+        onChange={(e) => setPulse(e.target.value ? parseFloat(e.target.value) : undefined)}
+      />
+      <FieldLabel>Hora</FieldLabel>
+      <input type="time" className={inputClass} value={time} onChange={(e) => setTime(e.target.value)} />
+      <ModalActions>
+        <button className={`${btnGhost} flex-1`} onClick={onClose}>
+          Cancelar
+        </button>
+        <button
+          className={`${btnPrimary} flex-1 disabled:opacity-40`}
+          disabled={!valid}
+          onClick={() => {
+            if (!valid || systolic === undefined || diastolic === undefined) return;
+            onConfirm({ id: uid(), time, systolic, diastolic, pulse: pulse ?? null });
           }}
         >
           Guardar

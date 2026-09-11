@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getDay } from "@/lib/storage";
 import { addDays, dayLabel, fmtDurationH, parseDate, round1, startOfWeek, todayStr } from "@/lib/date";
-import { DayData, ExerciseEntry } from "@/lib/types";
+import { DayData, ExerciseEntry, BloodPressureEntry } from "@/lib/types";
 
 interface WeekAgg {
   totKcal: number;
@@ -16,6 +16,7 @@ interface WeekAgg {
   exList: (ExerciseEntry & { date: string })[];
   weightEntries: { date: string; weight: number }[];
   notesEntries: { date: string; notes: string }[];
+  bpEntries: (BloodPressureEntry & { date: string })[];
   daysWithData: number;
 }
 
@@ -33,6 +34,7 @@ function aggregateWeek(weekStart: string): WeekAgg {
   const exList: (ExerciseEntry & { date: string })[] = [];
   const weightEntries: { date: string; weight: number }[] = [];
   const notesEntries: { date: string; notes: string }[] = [];
+  const bpEntries: (BloodPressureEntry & { date: string })[] = [];
 
   dayObjs.forEach((d) => {
     const flat = Object.values(d.meals).flat();
@@ -50,6 +52,7 @@ function aggregateWeek(weekStart: string): WeekAgg {
     d.exercises.forEach((e) => exList.push({ ...e, date: d.date }));
     if (d.weight) weightEntries.push({ date: d.date, weight: d.weight });
     if (d.notes && d.notes.trim()) notesEntries.push({ date: d.date, notes: d.notes.trim() });
+    d.bloodPressure.forEach((bp) => bpEntries.push({ ...bp, date: d.date }));
   });
 
   const daysWithData =
@@ -57,7 +60,20 @@ function aggregateWeek(weekStart: string): WeekAgg {
       (d) => Object.values(d.meals).flat().length > 0 || d.water > 0 || d.sleep || d.exercises.length > 0
     ).length || 1;
 
-  return { totKcal, totP, totC, totF, totWater, totSleepMin, sleepDays, exList, weightEntries, notesEntries, daysWithData };
+  return {
+    totKcal,
+    totP,
+    totC,
+    totF,
+    totWater,
+    totSleepMin,
+    sleepDays,
+    exList,
+    weightEntries,
+    notesEntries,
+    bpEntries,
+    daysWithData,
+  };
 }
 
 export default function ReportTab() {
@@ -81,8 +97,16 @@ export default function ReportTab() {
     exList,
     weightEntries,
     notesEntries,
+    bpEntries,
     daysWithData,
   } = agg;
+
+  const avgSystolic = bpEntries.length
+    ? Math.round(bpEntries.reduce((s, e) => s + e.systolic, 0) / bpEntries.length)
+    : null;
+  const avgDiastolic = bpEntries.length
+    ? Math.round(bpEntries.reduce((s, e) => s + e.diastolic, 0) / bpEntries.length)
+    : null;
 
   const weightChange =
     weightEntries.length >= 2 ? weightEntries[weightEntries.length - 1].weight - weightEntries[0].weight : null;
@@ -119,15 +143,14 @@ export default function ReportTab() {
         </button>
       </div>
 
-     <div id="report-print-area">
-  <h2 className="mb-1 font-display text-lg font-semibold">Relatório semanal</h2>
-  <div className="mb-4 font-num text-[13px] text-textmuted">{rangeLabel}</div>
+      <div id="report-print-area">
+        <h2 className="mb-1 font-display text-lg font-semibold">Relatório semanal</h2>
+        <div className="mb-4 font-num text-[13px] text-textmuted">{rangeLabel}</div>
 
-  <h2 className="mb-2.5 mt-0 font-display text-sm font-semibold text-textmuted">
-    Resumo alimentar (média diária)
-  </h2>
-
-  <div className="grid grid-cols-2 gap-2.5">
+        <h2 className="mb-2.5 mt-0 font-display text-sm font-semibold text-textmuted">
+          Resumo alimentar (média diária)
+        </h2>
+        <div className="grid grid-cols-2 gap-2.5">
           <RStat value={`${Math.round(totKcal / daysWithData)}`} label="kcal / dia" />
           <RStat value={`${round1(totP / daysWithData)}g`} label="Proteína / dia" />
           <RStat value={`${round1(totC / daysWithData)}g`} label="Hidratos / dia" />
@@ -150,9 +173,10 @@ export default function ReportTab() {
                 key={e.id}
                 className={`flex justify-between py-1.5 text-[13px] ${i > 0 ? "border-t border-border" : ""}`}
               >
-               <span>
-  {parseDate(e.date).toLocaleDateString("pt-PT", { weekday: "short", day: "2-digit", month: "short" })} · {e.type}
-</span>
+                <span>
+                  {parseDate(e.date).toLocaleDateString("pt-PT", { weekday: "short", day: "2-digit", month: "short" })} ·{" "}
+                  {e.type}
+                </span>
                 <span>{e.duration} min</span>
               </div>
             ))
@@ -187,13 +211,28 @@ export default function ReportTab() {
           {notesEntries.length ? (
             notesEntries.map((n, i) => (
               <div key={n.date} className={`py-2 text-[13px] ${i > 0 ? "border-t border-border" : ""}`}>
-<div className="mb-1 font-num text-[11px] text-textmuted">
-  {parseDate(n.date).toLocaleDateString("pt-PT", { weekday: "short", day: "2-digit", month: "short" })}
-</div>                <div className="whitespace-pre-wrap text-text">{n.notes}</div>
+                <div className="mb-1 font-num text-[11px] text-textmuted">
+                  {parseDate(n.date).toLocaleDateString("pt-PT", { weekday: "short", day: "2-digit", month: "short" })}
+                </div>
+                <div className="whitespace-pre-wrap text-text">{n.notes}</div>
               </div>
             ))
           ) : (
             <div className="text-xs text-textfaint">Sem observações esta semana.</div>
+          )}
+        </div>
+
+        <h2 className="mb-2.5 mt-[26px] font-display text-sm font-semibold text-textmuted">Tensão arterial</h2>
+        <div className="rounded-card border border-border bg-surface p-4">
+          {bpEntries.length ? (
+            <>
+              <div className="font-num text-[22px] font-semibold">
+                {avgSystolic}/{avgDiastolic} <span className="text-sm font-body font-normal text-textmuted">mmHg (média)</span>
+              </div>
+              <div className="mt-1 text-xs text-textmuted">{bpEntries.length} medição(ões) esta semana</div>
+            </>
+          ) : (
+            <div className="text-xs text-textfaint">Sem medições de tensão esta semana.</div>
           )}
         </div>
       </div>
