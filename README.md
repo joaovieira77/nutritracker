@@ -61,6 +61,13 @@ The project was born from a real personal need while working with a nutritionist
 * Optional weight tracking
 * Visualize weight evolution over time
 
+### 🩸 Blood Pressure
+
+* Optional blood pressure tracking, with support for multiple readings per day
+* Visualize systolic/diastolic evolution over time on a dedicated chart
+* Automatic classification based on reference blood pressure ranges (not a substitute for medical advice)
+* Weekly average included in the report
+
 ### 📝 Daily Notes
 
 * Add observations and contextual information to each day
