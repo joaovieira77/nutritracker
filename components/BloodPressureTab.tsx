@@ -15,10 +15,12 @@ interface BPPoint {
 
 function classify(systolic: number, diastolic: number): { label: string; colorClass: string } {
   if (systolic < 90 || diastolic < 60) return { label: "Baixa", colorClass: "text-[#8fb3d9]" };
-  if (systolic < 120 && diastolic < 80) return { label: "Normal", colorClass: "text-green" };
-  if (systolic < 130 && diastolic < 80) return { label: "Elevada", colorClass: "text-amber" };
-  if (systolic < 140 || diastolic < 90) return { label: "Hipertensão (estágio 1)", colorClass: "text-amber" };
-  return { label: "Hipertensão (estágio 2)", colorClass: "text-red" };
+  if (systolic >= 180 || diastolic >= 110) return { label: "Hipertensão (grau 3)", colorClass: "text-red" };
+  if (systolic >= 160 || diastolic >= 100) return { label: "Hipertensão (grau 2)", colorClass: "text-red" };
+  if (systolic >= 140 || diastolic >= 90) return { label: "Hipertensão (grau 1)", colorClass: "text-amber" };
+  if (systolic >= 130 || diastolic >= 85) return { label: "Normal-alta", colorClass: "text-amber" };
+  if (systolic >= 120 || diastolic >= 80) return { label: "Normal", colorClass: "text-green" };
+  return { label: "Ótima", colorClass: "text-green" };
 }
 
 export default function BloodPressureTab() {
