@@ -16,6 +16,24 @@ const RAW: [string, number, number, number, number][] = [
   ["Cuscuz cozido", 112, 3.8, 23, 0.2],
   ["Quinoa cozida", 120, 4.4, 21, 1.9],
   ["Arroz de cenoura", 135, 2.5, 24, 3.2],
+    // Mais tipos de massa
+  ["Esparguete cozido", 131, 5, 25, 1.1],
+  ["Esparguete integral cozido", 124, 5.3, 25, 1.3],
+  ["Esparguete sem glúten (milho/arroz) cozido", 140, 2.5, 30, 0.5],
+  ["Penne cozido", 131, 5, 25, 1.1],
+  ["Fusilli cozido", 131, 5, 25, 1.1],
+  ["Macarrão cozido", 131, 5, 25, 1.1],
+  ["Talharim cozido", 133, 4.9, 25, 1.4],
+  ["Lasanha (folhas) cozida", 131, 5, 25, 1.1],
+  ["Ravioli de carne cozido", 200, 8, 28, 6],
+  ["Ravioli de queijo/ricota cozido", 190, 8, 26, 6],
+  ["Tortellini de carne cozido", 210, 9, 27, 7],
+  ["Nhoque de batata cozido", 150, 3.5, 30, 1],
+  ["Massa esparguete ao alho e azeite (prato feito)", 180, 4.5, 25, 7],
+  ["Massa à bolonhesa (prato feito)", 155, 7, 18, 6],
+  ["Massa com atum (prato feito)", 145, 8, 20, 4],
+  ["Carbonara (prato feito)", 210, 8, 22, 10],
+
 
   // Batatas
   ["Batata cozida", 87, 1.9, 20, 0.1],
