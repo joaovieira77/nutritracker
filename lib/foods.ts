@@ -204,6 +204,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Pudim proteico Milbona (chocolate)", 76, 10, 5.2, 1.6],
   ["Yopro Danone Morango (proteico)", 58, 9.5, 4.2, 0.2],
   ["Yopro Danone Baunilha (proteico)", 57, 9.5, 3.6, 0.1],
+  ["Yopro Danone Manteiga de Amendoim e Banana (proteico)", 55, 9.4, 4.3, 0.1],
 ];
 
 function uid(): string {
