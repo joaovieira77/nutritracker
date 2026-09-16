@@ -34,6 +34,11 @@ export function deleteRecipe(id: string): void {
   saveRecipes(getRecipes().filter((r) => r.id !== id));
 }
 
+export function updateRecipe(id: string, updates: Omit<Recipe, "id">): void {
+  const recipes = getRecipes().map((r) => (r.id === id ? { ...r, ...updates } : r));
+  saveRecipes(recipes);
+}
+
 /** Totals contributed by all ingredients (absolute, not per 100g). */
 export function recipeTotals(recipe: Recipe) {
   return recipe.ingredients.reduce(

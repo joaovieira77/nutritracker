@@ -3,20 +3,24 @@
 import { useState } from "react";
 import Modal, { ModalActions, FieldLabel, inputClass, btnGhost, btnPrimary } from "../Modal";
 import { searchAllFoods } from "@/lib/search";
-import { Food, RecipeIngredient } from "@/lib/types";
+import { Food, Recipe, RecipeIngredient } from "@/lib/types";
 import { round1, uid } from "@/lib/date";
-import { addRecipe, recipeTotals } from "@/lib/recipes";
+import { addRecipe, recipeTotals, updateRecipe } from "@/lib/recipes";
 
 export default function RecipeBuilderModal({
   onClose,
   onSaved,
+  initial,
 }: {
   onClose: () => void;
   onSaved: () => void;
+  initial?: Recipe;
 }) {
-  const [name, setName] = useState("");
-  const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
-  const [finalWeight, setFinalWeight] = useState<number | undefined>(undefined);
+  const [name, setName] = useState(initial?.name ?? "");
+  const [ingredients, setIngredients] = useState<RecipeIngredient[]>(initial?.ingredients ?? []);
+  const [finalWeight, setFinalWeight] = useState<number | undefined>(
+    initial?.finalWeight ? initial.finalWeight : undefined
+  );
 
   const [query, setQuery] = useState("");
   const [picked, setPicked] = useState<Food | null>(null);
@@ -53,7 +57,7 @@ export default function RecipeBuilderModal({
   const canSave = name.trim().length > 0 && ingredients.length > 0;
 
   return (
-    <Modal title="Nova receita" onClose={onClose} center={false}>
+    <Modal title={initial ? "Editar receita" : "Nova receita"} onClose={onClose} center={false}>
       <FieldLabel>Nome da receita</FieldLabel>
       <input
         type="text"
@@ -171,11 +175,16 @@ export default function RecipeBuilderModal({
           disabled={!canSave}
           onClick={() => {
             if (!canSave) return;
-            addRecipe({ name: name.trim(), ingredients, finalWeight: finalWeight || 0 });
+            const data = { name: name.trim(), ingredients, finalWeight: finalWeight || 0 };
+            if (initial) {
+              updateRecipe(initial.id, data);
+            } else {
+              addRecipe(data);
+            }
             onSaved();
           }}
         >
-          Guardar receita
+          {initial ? "Guardar alterações" : "Guardar receita"}
         </button>
       </ModalActions>
     </Modal>

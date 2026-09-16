@@ -3,27 +3,29 @@
 import { useState } from "react";
 import Modal, { ModalActions, FieldLabel, inputClass, btnGhost, btnPrimary } from "../Modal";
 import { Food } from "@/lib/types";
-import { addCustomFood } from "@/lib/customFoods";
+import { addCustomFood, updateCustomFood } from "@/lib/customFoods";
 
 export default function CreateFoodModal({
   onClose,
   onCreated,
   initialName = "",
+  initial,
 }: {
   onClose: () => void;
   onCreated: (food: Food) => void;
   initialName?: string;
+  initial?: Food;
 }) {
-  const [name, setName] = useState(initialName);
-  const [kcal, setKcal] = useState<number | undefined>(undefined);
-  const [p, setP] = useState<number | undefined>(undefined);
-  const [c, setC] = useState<number | undefined>(undefined);
-  const [f, setF] = useState<number | undefined>(undefined);
+  const [name, setName] = useState(initial?.name ?? initialName);
+  const [kcal, setKcal] = useState<number | undefined>(initial?.kcal);
+  const [p, setP] = useState<number | undefined>(initial?.p);
+  const [c, setC] = useState<number | undefined>(initial?.c);
+  const [f, setF] = useState<number | undefined>(initial?.f);
 
   const valid = name.trim().length > 0 && kcal !== undefined && kcal >= 0;
 
   return (
-    <Modal title="Criar alimento" onClose={onClose}>
+    <Modal title={initial ? "Editar alimento" : "Criar alimento"} onClose={onClose}>
       <FieldLabel>Nome</FieldLabel>
       <input
         type="text"
@@ -87,17 +89,17 @@ export default function CreateFoodModal({
           disabled={!valid}
           onClick={() => {
             if (!valid || kcal === undefined) return;
-            const food = addCustomFood({
-              name: name.trim(),
-              kcal,
-              p: p ?? 0,
-              c: c ?? 0,
-              f: f ?? 0,
-            });
-            onCreated(food);
+            const data = { name: name.trim(), kcal, p: p ?? 0, c: c ?? 0, f: f ?? 0 };
+            if (initial) {
+              updateCustomFood(initial.id, data);
+              onCreated({ ...data, id: initial.id });
+            } else {
+              const food = addCustomFood(data);
+              onCreated(food);
+            }
           }}
         >
-          Guardar
+          {initial ? "Guardar alterações" : "Guardar"}
         </button>
       </ModalActions>
     </Modal>

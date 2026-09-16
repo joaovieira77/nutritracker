@@ -33,3 +33,8 @@ export function addCustomFood(input: Omit<Food, "id">): Food {
 export function deleteCustomFood(id: string): void {
   saveCustomFoods(getCustomFoods().filter((f) => f.id !== id));
 }
+
+export function updateCustomFood(id: string, updates: Omit<Food, "id">): void {
+  const foods = getCustomFoods().map((f) => (f.id === id ? { ...f, ...updates } : f));
+  saveCustomFoods(foods);
+}

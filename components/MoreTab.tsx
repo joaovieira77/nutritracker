@@ -13,6 +13,8 @@ export default function MoreTab() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showCreateFood, setShowCreateFood] = useState(false);
   const [showRecipeBuilder, setShowRecipeBuilder] = useState(false);
+  const [editingFood, setEditingFood] = useState<Food | null>(null);
+  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
   const [importMsg, setImportMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +66,12 @@ export default function MoreTab() {
               <div className="flex items-center gap-2">
                 <span className="font-num text-xs text-textmuted">{Math.round(f.kcal)} kcal/100g</span>
                 <button
+                  className="px-0.5 text-xs text-textfaint underline"
+                  onClick={() => setEditingFood(f)}
+                >
+                  editar
+                </button>
+                <button
                   className="px-0.5 text-base text-textfaint"
                   onClick={() => {
                     deleteCustomFood(f.id);
@@ -100,6 +108,12 @@ export default function MoreTab() {
                   <span>{r.name}</span>
                   <div className="flex items-center gap-2">
                     <span className="font-num text-xs text-textmuted">{Math.round(asFood.kcal)} kcal/100g</span>
+                    <button
+                      className="px-0.5 text-xs text-textfaint underline"
+                      onClick={() => setEditingRecipe(r)}
+                    >
+                      editar
+                    </button>
                     <button
                       className="px-0.5 text-base text-textfaint"
                       onClick={() => {
@@ -159,20 +173,30 @@ export default function MoreTab() {
         Importar um backup adiciona os dias e itens em falta; não apaga dados já existentes neste browser.
       </div>
 
-      {showCreateFood && (
+      {(showCreateFood || editingFood) && (
         <CreateFoodModal
-          onClose={() => setShowCreateFood(false)}
+          initial={editingFood ?? undefined}
+          onClose={() => {
+            setShowCreateFood(false);
+            setEditingFood(null);
+          }}
           onCreated={() => {
             setShowCreateFood(false);
+            setEditingFood(null);
             refresh();
           }}
         />
       )}
-      {showRecipeBuilder && (
+      {(showRecipeBuilder || editingRecipe) && (
         <RecipeBuilderModal
-          onClose={() => setShowRecipeBuilder(false)}
+          initial={editingRecipe ?? undefined}
+          onClose={() => {
+            setShowRecipeBuilder(false);
+            setEditingRecipe(null);
+          }}
           onSaved={() => {
             setShowRecipeBuilder(false);
+            setEditingRecipe(null);
             refresh();
           }}
         />
