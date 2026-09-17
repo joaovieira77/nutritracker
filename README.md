@@ -37,6 +37,7 @@ The project was born from a real personal need while working with a nutritionist
 * Automatically calculate calories and macros based on all ingredients
 * Calculate nutritional values per 100g
 * Save recipes for future use
+* Edit recipes
 * Search and log recipes just like regular foods
 
 ### 🏃 Exercise
