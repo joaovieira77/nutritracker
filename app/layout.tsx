@@ -19,7 +19,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Diário — Tracking de Saúde",
+  title: "Nutritracker",
   description: "Registo diário de alimentação, exercício, sono, água e peso.",
 };
 
