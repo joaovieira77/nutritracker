@@ -199,7 +199,8 @@ export default function TodayTab() {
             <div key={e.id} className={`flex justify-between py-2 text-[13px] ${i > 0 ? "border-t border-border" : ""}`}>
               <span>{e.type}</span>
               <span className="flex items-center gap-2">
-                <span className="font-num text-textmuted">{e.duration} min</span>
+                <span className="font-num text-textmuted">
+          {e.duration} min{e.caloriesBurned ? ` · ${e.caloriesBurned} kcal` : ""}</span>
                 <button
                   className="px-0.5 text-base text-textfaint"
                   onClick={() =>

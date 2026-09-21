@@ -31,6 +31,7 @@ export interface ExerciseEntry {
   id: string;
   type: string;
   duration: number; // minutes
+  caloriesBurned?: number; // opcional
 }
 
 export interface SleepEntry {
@@ -78,3 +79,4 @@ export interface Recipe {
   ingredients: RecipeIngredient[];
   finalWeight: number; // peso final do prato depois de cozinhado (g); 0 = usar soma dos ingredientes
 }
+

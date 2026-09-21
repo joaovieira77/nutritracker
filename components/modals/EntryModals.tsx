@@ -50,6 +50,7 @@ export function ExerciseModal({
 }) {
   const [type, setType] = useState("");
   const [duration, setDuration] = useState(30);
+  const [caloriesBurned, setCaloriesBurned] = useState<number | undefined>(undefined);
   return (
     <Modal title="Registar exercício" onClose={onClose}>
       <FieldLabel>Tipo</FieldLabel>
@@ -69,6 +70,15 @@ export function ExerciseModal({
         value={duration}
         onChange={(e) => setDuration(parseFloat(e.target.value) || 0)}
       />
+      <FieldLabel>Calorias gastas (opcional)</FieldLabel>
+      <input
+        type="number"
+        min={0}
+        inputMode="numeric"
+        className={inputClass}
+        value={caloriesBurned ?? ""}
+        onChange={(e) => setCaloriesBurned(e.target.value ? parseFloat(e.target.value) : undefined)}
+      />
       <ModalActions>
         <button className={`${btnGhost} flex-1`} onClick={onClose}>
           Cancelar
@@ -77,7 +87,7 @@ export function ExerciseModal({
           className={`${btnPrimary} flex-1`}
           onClick={() => {
             if (!type.trim() || duration <= 0) return;
-            onConfirm({ id: uid(), type: type.trim(), duration });
+            onConfirm({ id: uid(), type: type.trim(), duration, caloriesBurned });
           }}
         >
           Guardar
