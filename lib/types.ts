@@ -8,13 +8,13 @@ export const MEAL_TYPES: { key: MealKey; label: string }[] = [
   { key: "outro", label: "Outro" },
 ];
 
-export interface Food {
+export interface Food { // per 100g
   id: string;
   name: string;
-  kcal: number; // per 100g
-  p: number; // protein per 100g
-  c: number; // carbs per 100g
-  f: number; // fat per 100g
+  kcal: number; 
+  p: number;
+  c: number; 
+  f: number; 
 }
 
 export interface FoodEntry {

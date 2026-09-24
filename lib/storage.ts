@@ -14,7 +14,7 @@ export function getDay(dateStr: string): DayData {
     const raw = window.localStorage.getItem(KEY_PREFIX + dateStr);
     if (!raw) return emptyDay();
     const parsed = JSON.parse(raw) as Partial<DayData>;
-    // merge with empty day to survive schema additions gracefully
+    // merge with empty day to survive schema additions
     return { ...emptyDay(), ...parsed, meals: { ...emptyDay().meals, ...parsed.meals } };
   } catch {
     return emptyDay();

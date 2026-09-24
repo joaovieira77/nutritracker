@@ -1,8 +1,8 @@
 import { Food } from "./types";
 
-// [nome, kcal, proteína, hidratos, gordura] por 100g
+// [name, kcal, protein, carbohydrates, fat] per 100g
 const RAW: [string, number, number, number, number][] = [
- // Cereais, massas e pão
+ // Carbohydrates
   ["Arroz branco cozido", 130, 2.7, 28, 0.3],
   ["Arroz integral cozido", 123, 2.6, 25, 1],
   ["Massa cozida", 131, 5, 25, 1.1],
@@ -16,7 +16,6 @@ const RAW: [string, number, number, number, number][] = [
   ["Cuscuz cozido", 112, 3.8, 23, 0.2],
   ["Quinoa cozida", 120, 4.4, 21, 1.9],
   ["Arroz de cenoura", 135, 2.5, 24, 3.2],
-    // Mais tipos de massa
   ["Esparguete cozido", 131, 5, 25, 1.1],
   ["Esparguete integral cozido", 124, 5.3, 25, 1.3],
   ["Esparguete sem glúten (milho/arroz) cozido", 140, 2.5, 30, 0.5],
@@ -35,13 +34,13 @@ const RAW: [string, number, number, number, number][] = [
   ["Carbonara (prato feito)", 210, 8, 22, 10],
 
 
-  // Batatas
+  // Potatoes
   ["Batata cozida", 87, 1.9, 20, 0.1],
   ["Batata frita", 312, 3.4, 41, 15],
   ["Batata-doce cozida", 90, 2, 21, 0.1],
   ["Puré de batata", 113, 2, 17, 4],
 
-  // Carnes
+  // Meat
   ["Peito de frango grelhado", 165, 31, 0, 3.6],
   ["Coxa de frango", 209, 26, 0, 10.9],
   ["Carne de vaca magra grelhada", 217, 26, 0, 12],
@@ -60,7 +59,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Salsicha", 301, 12, 3, 27],
   ["Chouriço", 455, 24, 2, 38],
   
-// Mais frango e peru
+// Chicken and turkey
   ["Bife de frango grelhado", 165, 31, 0, 3.6],
   ["Escalope de frango grelhado", 155, 30, 0, 3.5],
   ["Frango grelhado com pele", 215, 27, 0, 11],
@@ -79,7 +78,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Hambúrguer de peru", 180, 21, 2, 10],
   ["Salsicha de frango/peru", 180, 13, 3, 13],
   ["Perna de frango estufada (no tacho)", 195, 22, 3, 10],
-  // Peixe e marisco
+  // Fish and seafood
   ["Peixe (pescada) cozido", 90, 18, 0, 1.3],
   ["Salmão grelhado", 208, 20, 0, 13],
   ["Atum em água (escorrido)", 116, 26, 0, 1],
@@ -95,7 +94,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Mexilhão cozido", 86, 12, 3.7, 2.2],
   ["Amêijoas cozidas", 74, 12.8, 2.6, 1],
 
-  // Ovos e laticínios
+  // Eggs and dairy
   ["Ovo cozido", 155, 13, 1.1, 11],
   ["Ovo estrelado", 196, 14, 0.4, 15],
   ["Iogurte natural", 61, 3.5, 4.7, 3.3],
@@ -109,15 +108,13 @@ const RAW: [string, number, number, number, number][] = [
   ["Requeijão", 174, 11, 4, 13],
   ["Natas (culinárias)", 292, 2.2, 3, 30],
 
-  // Leguminosas
+  // Vegetables
   ["Feijão cozido", 127, 8.7, 22, 0.5],
   ["Grão-de-bico cozido", 164, 8.9, 27, 2.6],
   ["Lentilhas cozidas", 116, 9, 20, 0.4],
   ["Húmus", 166, 7.9, 14, 9.6],
   ["Ervilhas cozidas", 84, 5.4, 14, 0.4],
   ["Favas cozidas", 88, 7.6, 17, 0.6],
-
-  // Vegetais
   ["Brócolos cozidos", 35, 2.4, 7, 0.4],
   ["Espinafres cozidos", 23, 2.9, 3.6, 0.4],
   ["Cenoura crua", 41, 0.9, 10, 0.2],
@@ -139,7 +136,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Espargos cozidos", 22, 2.4, 4, 0.2],
   ["Milho cozido", 96, 3.4, 21, 1.5],
 
-  // Sopas
+  // Soups
   ["Sopa de legumes", 35, 1.5, 6, 0.5],
   ["Caldo verde", 45, 1.5, 6, 1.8],
   ["Canja de galinha", 40, 3, 5, 1],
@@ -148,7 +145,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Sopa de feijão", 55, 3, 8, 1.2],
   ["Gaspacho", 25, 0.9, 4, 0.8],
 
-  // Fruta
+  // Fruits
   ["Banana", 89, 1.1, 23, 0.3],
   ["Maçã", 52, 0.3, 14, 0.2],
   ["Laranja", 47, 0.9, 12, 0.1],
@@ -173,18 +170,18 @@ const RAW: [string, number, number, number, number][] = [
   ["Dióspiro", 70, 0.6, 18, 0.2],
   ["Nectarina", 44, 1.1, 10, 0.3],
 
-  // Gorduras e frutos secos
+  // Fat and nuts
   ["Azeite", 884, 0, 0, 100],
   ["Manteiga", 717, 0.9, 0.1, 81],
   ["Amêndoas", 579, 21, 22, 50],
   ["Nozes", 654, 15, 14, 65],
   ["Amendoim", 567, 26, 16, 49],
 
-  // Cereais de pequeno-almoço e afins
+  // Cereals and grains
   ["Cereais integrais", 379, 13, 68, 4],
   ["Aveia", 389, 17, 66, 7],
 
-  // Doces, snacks e pastelaria
+  // Sweets and snacks
   ["Açúcar", 387, 0, 100, 0],
   ["Mel", 304, 0.3, 82, 0],
   ["Chocolate preto 70%", 598, 7.8, 46, 43],
@@ -200,7 +197,7 @@ const RAW: [string, number, number, number, number][] = [
   ["Barra de cereais", 400, 7, 65, 12],
   ["Gelado (baunilha)", 207, 3.5, 24, 11],
 
-  // Líquidos e bebidas (valores por 100ml)
+  // Beverages
   ["Café (bica/expresso)", 2, 0.1, 0.3, 0],
   ["Galão", 38, 1.9, 3, 1.5],
   ["Meia de leite", 30, 1.6, 2.4, 0.8],
@@ -215,7 +212,8 @@ const RAW: [string, number, number, number, number][] = [
   ["Vinho tinto", 85, 0.1, 2.6, 0],
   ["Água de coco", 19, 0.7, 3.7, 0.2],
   ["Chocolate quente (leite + cacau)", 85, 3.4, 10, 3.5],
-    // Pudins proteicos Milbona (Lidl)
+
+    // Protein desserts
   ["Pudim proteico Milbona (baunilha)", 75, 10, 5.2, 1.6],
   ["Pudim proteico Milbona (caramelo)", 75, 10, 5.2, 1.6],
   ["Pudim proteico Milbona (avelã)", 75, 10, 5.2, 1.6],
