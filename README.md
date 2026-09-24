@@ -44,6 +44,7 @@ The project was born from a real personal need while working with a nutritionist
 
 * Track different types of exercise
 * Record exercise duration
+* Optional: Record the calories burned
 * Support multiple activities per day
 
 ### 😴 Sleep
