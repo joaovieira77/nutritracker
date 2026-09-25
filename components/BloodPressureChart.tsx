@@ -43,11 +43,11 @@ export default function BloodPressureChart({ points }: { points: BPPoint[] }) {
         </span>
       </div>
       <svg viewBox={`0 0 ${width} ${height}`} className="h-[calc(100%-22px)] w-full" preserveAspectRatio="none">
-        <polyline points={sysLine} fill="none" stroke="#e8384a" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+        <polyline points={sysLine} fill="none" stroke="#38cee8" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         <polyline points={diaLine} fill="none" stroke="#d9a441" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         {points.map((p, i) => (
           <g key={p.date + p.time}>
-            <circle cx={xFor(i)} cy={yFor(p.systolic)} r={3} fill="#e8384a" />
+            <circle cx={xFor(i)} cy={yFor(p.systolic)} r={3} fill="#38cee8" />
             <circle cx={xFor(i)} cy={yFor(p.diastolic)} r={3} fill="#d9a441" />
           </g>
         ))}
