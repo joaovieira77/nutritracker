@@ -36,7 +36,7 @@ export default function BloodPressureChart({ points }: { points: BPPoint[] }) {
     <div className="h-[230px] rounded-card border border-border bg-surface px-2.5 py-4">
       <div className="mb-1.5 flex items-center gap-4 px-2 text-[11px] text-textmuted">
         <span className="flex items-center gap-1.5">
-          <span className="inline-block h-2 w-2 rounded-full bg-red" /> Sistólica
+          <span className="inline-block h-2 w-2 rounded-full bg-cyan-300" /> Sistólica
         </span>
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-amber" /> Diastólica
