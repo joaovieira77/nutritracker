@@ -5,7 +5,14 @@ import { DayData, Food, FoodEntry, MEAL_TYPES, MealKey, BloodPressureEntry } fro
 import { getDay, saveDay } from "@/lib/storage";
 import { addDays, dayLabel, fmtDurationH, round1, todayStr } from "@/lib/date";
 import { FoodSearchModal, QuantityModal } from "./modals/FoodModals";
-import { WaterModal, ExerciseModal, SleepModal, WeightModal, BloodPressureModal } from "./modals/EntryModals";
+import {
+  WaterModal,
+  ExerciseModal,
+  SleepModal,
+  WeightModal,
+  BloodPressureModal,
+  CaloriesBurnedModal,
+} from "./modals/EntryModals";
 
 type ModalState =
   | { kind: "none" }
@@ -15,7 +22,8 @@ type ModalState =
   | { kind: "exercise" }
   | { kind: "sleep" }
   | { kind: "weight" }
-  | { kind: "bloodPressure" };
+  | { kind: "bloodPressure" }
+  | { kind: "caloriesBurned" };
 
 export default function TodayTab() {
   const [currentDate, setCurrentDate] = useState(todayStr());
@@ -232,8 +240,10 @@ export default function TodayTab() {
           </div>
 
           <div>
-            <SectionTitle className="lg:mb-2 lg:mt-0 lg:text-xs lg:uppercase lg:tracking-wide">Sono &amp; Peso</SectionTitle>
-            <div className="grid grid-cols-2 gap-3 lg:gap-2.5">
+            <SectionTitle className="lg:mb-2 lg:mt-0 lg:text-xs lg:uppercase lg:tracking-wide">
+              Sono, Peso &amp; Gasto Calórico
+            </SectionTitle>
+            <div className="grid grid-cols-3 gap-3 lg:gap-2.5">
               <div
                 className="cursor-pointer rounded-card border border-border bg-surface p-3.5 lg:p-3"
                 onClick={() => setModal({ kind: "sleep" })}
@@ -270,6 +280,26 @@ export default function TodayTab() {
                   <>
                     <div className="text-[15px] text-textmuted">—</div>
                     <div className="mt-0.5 text-xs text-textmuted">Peso</div>
+                    <div className="mt-1.5 text-[11px] text-textfaint">Opcional</div>
+                  </>
+                )}
+              </div>
+              <div
+                className="cursor-pointer rounded-card border border-border bg-surface p-3.5 lg:p-3"
+                onClick={() => setModal({ kind: "caloriesBurned" })}
+              >
+                {day.caloriesBurnedTotal ? (
+                  <>
+                    <div className="font-num text-[22px] font-semibold lg:text-lg">
+                      {day.caloriesBurnedTotal} <span className="text-xs text-textmuted">kcal</span>
+                    </div>
+                    <div className="mt-0.5 text-xs text-textmuted">Gasto</div>
+                    <div className="mt-1.5 text-[11px] text-textfaint">Registado hoje</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-[15px] text-textmuted">—</div>
+                    <div className="mt-0.5 text-xs text-textmuted">Gasto</div>
                     <div className="mt-1.5 text-[11px] text-textfaint">Opcional</div>
                   </>
                 )}
@@ -416,6 +446,18 @@ export default function TodayTab() {
           onConfirm={(entry: BloodPressureEntry) => {
             mutate((d) => {
               d.bloodPressure.push(entry);
+            });
+            closeModal();
+          }}
+        />
+      )}
+      {modal.kind === "caloriesBurned" && (
+        <CaloriesBurnedModal
+          initial={day.caloriesBurnedTotal}
+          onClose={closeModal}
+          onConfirm={(kcal) => {
+            mutate((d) => {
+              d.caloriesBurnedTotal = kcal;
             });
             closeModal();
           }}
