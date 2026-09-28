@@ -126,26 +126,36 @@ export default function TodayTab() {
                     </span>
                   </div>
                   {items.map((f) => (
-                    <div key={f.id} className="flex items-center justify-between border-t border-border px-1 py-2.5 text-[13.5px] lg:py-3">
-                      <div>
-                        <span>{f.name}</span>
-                        <span className="ml-1.5 text-xs text-textfaint">{f.grams}g</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="font-num whitespace-nowrap text-textmuted">{Math.round(f.kcal)} kcal</span>
-                        <button
-                          className="ml-2 px-0.5 text-base text-textfaint"
-                          onClick={() =>
-                            mutate((d) => {
-                              d.meals[mt.key] = d.meals[mt.key].filter((x) => x.id !== f.id);
-                            })
-                          }
-                        >
-                          ×
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+  <div
+    key={f.id}
+    className="flex items-center justify-between border-t border-border px-1 py-2.5 text-[13.5px] lg:py-3"
+  >
+    <div>
+      <div>
+        <span>{f.name}</span>
+        <span className="ml-1.5 text-xs text-textfaint">{f.grams}g</span>
+      </div>
+      <div className="mt-0.5 flex gap-2.5 font-num text-[11px]">
+        <span className="text-red">P {round1(f.p)}g</span>
+        <span className="text-amber">H {round1(f.c)}g</span>
+        <span className="text-[#8fb3d9]">G {round1(f.f)}g</span>
+      </div>
+    </div>
+    <div className="flex items-center">
+      <span className="font-num whitespace-nowrap text-textmuted">{Math.round(f.kcal)} kcal</span>
+      <button
+        className="ml-2 px-0.5 text-base text-textfaint"
+        onClick={() =>
+          mutate((d) => {
+            d.meals[mt.key] = d.meals[mt.key].filter((x) => x.id !== f.id);
+          })
+        }
+      >
+        ×
+      </button>
+    </div>
+  </div>
+))}
                   <button
                     className="mt-1.5 w-full rounded-[10px] border border-dashed border-border px-2.5 py-2 text-left text-[13px] text-textmuted active:border-red active:text-red lg:hover:border-red lg:hover:text-red"
                     onClick={() => setModal({ kind: "foodSearch", mealKey: mt.key })}
