@@ -136,9 +136,9 @@ export default function TodayTab() {
         <span className="ml-1.5 text-xs text-textfaint">{f.grams}g</span>
       </div>
       <div className="mt-0.5 flex gap-2.5 font-num text-[11px]">
-        <span className="text-red">P {round1(f.p)}g</span>
-        <span className="text-amber">H {round1(f.c)}g</span>
-        <span className="text-[#8fb3d9]">G {round1(f.f)}g</span>
+        <span className="text-textfaint">P {round1(f.p)}g</span>
+        <span className="text-textfaint">H {round1(f.c)}g</span>
+        <span className="text-textfaint">G {round1(f.f)}g</span>
       </div>
     </div>
     <div className="flex items-center">
