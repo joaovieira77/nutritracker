@@ -40,20 +40,26 @@ export default function BottomNav({
   onChange: (tab: Tab) => void;
 }) {
   return (
-    <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-bg/90 backdrop-blur-md px-3 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2">
-      <div className="mx-auto flex max-w-[640px] justify-between gap-1.5">
+    <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-bg/90 backdrop-blur-md px-3 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2 lg:bottom-auto lg:right-auto lg:top-0 lg:h-screen lg:w-56 lg:border-r lg:border-t-0 lg:bg-bg lg:px-3 lg:pb-6 lg:pt-8">
+      <div className="hidden items-center gap-2 px-3 font-display text-xl font-semibold lg:mb-10 lg:flex">
+       
+        NutriTracker
+      </div>
+      <div className="mx-auto flex max-w-[640px] justify-between gap-1.5 lg:mx-0 lg:max-w-none lg:flex-col lg:justify-start lg:gap-5">
         {ITEMS.map((item) => (
           <button
             key={item.tab}
             onClick={() => onChange(item.tab)}
-            className={`flex flex-1 flex-col items-center gap-1 rounded-[10px] px-1 py-1.5 ${
-              active === item.tab ? "text-red" : "text-textfaint"
+            className={`flex flex-1 flex-col items-center gap-1 rounded-[10px] px-1 py-1.5 lg:flex-none lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2.5 ${
+              active === item.tab
+                ? "text-red lg:bg-red/10"
+                : "text-textfaint lg:hover:bg-surface2 lg:hover:text-text"
             }`}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5 stroke-current fill-none stroke-[1.8]">
               {item.icon}
             </svg>
-            <span className="text-[10.5px] font-semibold">{item.label}</span>
+            <span className="text-[10.5px] font-semibold lg:text-sm">{item.label}</span>
           </button>
         ))}
       </div>
