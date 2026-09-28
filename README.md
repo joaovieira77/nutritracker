@@ -61,6 +61,7 @@ The project was born from a real personal need while working with a nutritionist
 ### ⚖️ Weight
 
 * Optional weight tracking
+* Optional total calories burned per day
 * Visualize weight evolution over time
 
 ### 🩸 Blood Pressure
