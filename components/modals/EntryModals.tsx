@@ -297,3 +297,42 @@ export function CaloriesBurnedModal({
     </Modal>
   );
 }
+
+export function StepsModal({
+  initial,
+  onClose,
+  onConfirm,
+}: {
+  initial: number | null;
+  onClose: () => void;
+  onConfirm: (steps: number) => void;
+}) {
+  const [value, setValue] = useState(initial ?? undefined);
+  return (
+    <Modal title="Passos dados" onClose={onClose}>
+      <FieldLabel>Total de passos do dia</FieldLabel>
+      <input
+        type="number"
+        min={0}
+        inputMode="numeric"
+        placeholder="ex: 8500"
+        className={inputClass}
+        value={value ?? ""}
+        onChange={(e) => setValue(e.target.value ? parseFloat(e.target.value) : undefined)}
+      />
+      <ModalActions>
+        <button className={`${btnGhost} flex-1`} onClick={onClose}>
+          Cancelar
+        </button>
+        <button
+          className={`${btnPrimary} flex-1`}
+          onClick={() => {
+            if (value !== undefined && value >= 0) onConfirm(Math.round(value));
+          }}
+        >
+          Guardar
+        </button>
+      </ModalActions>
+    </Modal>
+  );
+}

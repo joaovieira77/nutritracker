@@ -12,6 +12,7 @@ import {
   WeightModal,
   BloodPressureModal,
   CaloriesBurnedModal,
+  StepsModal,
 } from "./modals/EntryModals";
 
 type ModalState =
@@ -23,7 +24,8 @@ type ModalState =
   | { kind: "sleep" }
   | { kind: "weight" }
   | { kind: "bloodPressure" }
-  | { kind: "caloriesBurned" };
+  | { kind: "caloriesBurned" }
+  | { kind: "steps" };
 
 export default function TodayTab() {
   const [currentDate, setCurrentDate] = useState(todayStr());
@@ -96,9 +98,9 @@ export default function TodayTab() {
       </header>
 
       <div className="lg:flex lg:items-start lg:gap-8">
-        {/* Coluna esquerda ~60%: totals + refeições — mais espaço, é onde se vive mais tempo */}
+        {/* Coluna esquerda ~58%: totals + refeições */}
         <div className="lg:w-[58%]">
-          {/* Totals hero — cresce no desktop para manter presença face ao espaço extra */}
+          {/* Totals hero */}
           <div className="relative overflow-hidden rounded-[18px] border border-border bg-surface p-5 px-[18px] lg:rounded-[22px] lg:p-8">
             <div className="pointer-events-none absolute -right-10 -top-10 h-[140px] w-[140px] rounded-full bg-[radial-gradient(circle,rgba(232,56,74,.16),transparent_70%)] lg:h-[220px] lg:w-[220px]" />
             <div className="font-num text-[42px] font-bold leading-none lg:text-[58px]">
@@ -126,36 +128,36 @@ export default function TodayTab() {
                     </span>
                   </div>
                   {items.map((f) => (
-  <div
-    key={f.id}
-    className="flex items-center justify-between border-t border-border px-1 py-2.5 text-[13.5px] lg:py-3"
-  >
-    <div>
-      <div>
-        <span>{f.name}</span>
-        <span className="ml-1.5 text-xs text-textfaint">{f.grams}g</span>
-      </div>
-      <div className="mt-0.5 flex gap-2.5 font-num text-[11px]">
-        <span className="text-textfaint">P {round1(f.p)}g</span>
-        <span className="text-textfaint">H {round1(f.c)}g</span>
-        <span className="text-textfaint">G {round1(f.f)}g</span>
-      </div>
-    </div>
-    <div className="flex items-center">
-      <span className="font-num whitespace-nowrap text-textmuted">{Math.round(f.kcal)} kcal</span>
-      <button
-        className="ml-2 px-0.5 text-base text-textfaint"
-        onClick={() =>
-          mutate((d) => {
-            d.meals[mt.key] = d.meals[mt.key].filter((x) => x.id !== f.id);
-          })
-        }
-      >
-        ×
-      </button>
-    </div>
-  </div>
-))}
+                    <div
+                      key={f.id}
+                      className="flex items-center justify-between border-t border-border px-1 py-2.5 text-[13.5px] lg:py-3"
+                    >
+                      <div>
+                        <div>
+                          <span>{f.name}</span>
+                          <span className="ml-1.5 text-xs text-textfaint">{f.grams}g</span>
+                        </div>
+                        <div className="mt-0.5 flex gap-2.5 font-num text-[11px]">
+                          <span className="text-textfaint">P {round1(f.p)}g</span>
+                          <span className="text-textfaint">H {round1(f.c)}g</span>
+                          <span className="text-textfaint">G {round1(f.f)}g</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="font-num whitespace-nowrap text-textmuted">{Math.round(f.kcal)} kcal</span>
+                        <button
+                          className="ml-2 px-0.5 text-base text-textfaint"
+                          onClick={() =>
+                            mutate((d) => {
+                              d.meals[mt.key] = d.meals[mt.key].filter((x) => x.id !== f.id);
+                            })
+                          }
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                   <button
                     className="mt-1.5 w-full rounded-[10px] border border-dashed border-border px-2.5 py-2 text-left text-[13px] text-textmuted active:border-red active:text-red lg:hover:border-red lg:hover:text-red"
                     onClick={() => setModal({ kind: "foodSearch", mealKey: mt.key })}
@@ -168,7 +170,7 @@ export default function TodayTab() {
           </div>
         </div>
 
-        {/* Coluna direita ~40%: registos rápidos, mais compactos e densos — não competem em peso visual com Refeições */}
+        {/* Coluna direita ~42%: registos rápidos */}
         <div className="mt-[26px] lg:mt-0 lg:w-[42%] lg:space-y-5">
           <div>
             <SectionTitle className="lg:mb-2 lg:mt-0 lg:text-xs lg:uppercase lg:tracking-wide">Água</SectionTitle>
@@ -251,9 +253,9 @@ export default function TodayTab() {
 
           <div>
             <SectionTitle className="lg:mb-2 lg:mt-0 lg:text-xs lg:uppercase lg:tracking-wide">
-              Sono, Peso &amp; Gasto Calórico
+              Sono, Peso, Passos &amp; Gasto Calórico
             </SectionTitle>
-            <div className="grid grid-cols-3 gap-3 lg:gap-2.5">
+            <div className="grid grid-cols-2 gap-3 lg:gap-2.5">
               <div
                 className="cursor-pointer rounded-card border border-border bg-surface p-3.5 lg:p-3"
                 onClick={() => setModal({ kind: "sleep" })}
@@ -290,6 +292,26 @@ export default function TodayTab() {
                   <>
                     <div className="text-[15px] text-textmuted">—</div>
                     <div className="mt-0.5 text-xs text-textmuted">Peso</div>
+                    <div className="mt-1.5 text-[11px] text-textfaint">Opcional</div>
+                  </>
+                )}
+              </div>
+              <div
+                className="cursor-pointer rounded-card border border-border bg-surface p-3.5 lg:p-3"
+                onClick={() => setModal({ kind: "steps" })}
+              >
+                {day.steps ? (
+                  <>
+                    <div className="font-num text-[22px] font-semibold lg:text-lg">
+                      {day.steps.toLocaleString("pt-PT")}
+                    </div>
+                    <div className="mt-0.5 text-xs text-textmuted">Passos</div>
+                    <div className="mt-1.5 text-[11px] text-textfaint">Registado hoje</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-[15px] text-textmuted">—</div>
+                    <div className="mt-0.5 text-xs text-textmuted">Passos</div>
                     <div className="mt-1.5 text-[11px] text-textfaint">Opcional</div>
                   </>
                 )}
@@ -468,6 +490,18 @@ export default function TodayTab() {
           onConfirm={(kcal) => {
             mutate((d) => {
               d.caloriesBurnedTotal = kcal;
+            });
+            closeModal();
+          }}
+        />
+      )}
+      {modal.kind === "steps" && (
+        <StepsModal
+          initial={day.steps}
+          onClose={closeModal}
+          onConfirm={(steps) => {
+            mutate((d) => {
+              d.steps = steps;
             });
             closeModal();
           }}
