@@ -3,7 +3,7 @@ import { DayData, MEAL_TYPES } from "./types";
 export function emptyDay(): DayData {
   const meals = {} as DayData["meals"];
   MEAL_TYPES.forEach((m) => (meals[m.key] = []));
- return { meals, exercises: [], sleep: null, water: 0, weight: null, notes: "", bloodPressure: [], caloriesBurnedTotal: null };
+ return { meals, exercises: [], sleep: null, water: 0, weight: null, notes: "", bloodPressure: [], caloriesBurnedTotal: null, steps: null };
 }
 
 const KEY_PREFIX = "day:";
