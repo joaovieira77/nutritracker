@@ -192,23 +192,43 @@ export default function TodayTab() {
                 </div>
               </div>
               <div className="mt-3.5 flex gap-2 lg:mt-2.5">
-                <button
-                  className="rounded-[10px] border border-red bg-red px-3.5 py-2.5 text-[13px] font-semibold text-[#1a0506] lg:px-3 lg:py-2"
-                  onClick={() =>
-                    mutate((d) => {
-                      d.water = (d.water || 0) + 250;
-                    })
-                  }
-                >
-                  +1 copo (250ml)
-                </button>
-                <button
-                  className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
-                  onClick={() => setModal({ kind: "water" })}
-                >
-                  Personalizado
-                </button>
-              </div>
+  <button
+    className="rounded-[10px] border border-red bg-red px-3.5 py-2.5 text-[13px] font-semibold text-[#1a0506] lg:px-3 lg:py-2"
+    onClick={() =>
+      mutate((d) => {
+        d.water = (d.water || 0) + 250;
+      })
+    }
+  >
+    +1 copo (250ml)
+  </button>
+  <button
+    className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
+    onClick={() =>
+      mutate((d) => {
+        d.water = Math.max(0, (d.water || 0) - 250);
+      })
+    }
+  >
+    −1 copo
+  </button>
+  <button
+    className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
+    onClick={() => setModal({ kind: "water" })}
+  >
+    Personalizado
+  </button>
+  <button
+    className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold text-textmuted lg:px-3 lg:py-2"
+    onClick={() =>
+      mutate((d) => {
+        d.water = 0;
+      })
+    }
+  >
+    Repor
+  </button>
+</div>
             </div>
           </div>
 
