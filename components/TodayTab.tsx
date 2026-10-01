@@ -203,14 +203,14 @@ export default function TodayTab() {
     +1 copo (250ml)
   </button>
   <button
-    className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
+    className="rounded-[10px] border border-red bg-red-50 px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
     onClick={() =>
       mutate((d) => {
         d.water = Math.max(0, (d.water || 0) - 250);
       })
     }
   >
-    −1 copo
+    −1 copo (250ml)
   </button>
   <button
     className="rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold lg:px-3 lg:py-2"
