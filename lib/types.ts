@@ -57,7 +57,7 @@ export interface DayData {
   notes: string; // observações livres do dia
   bloodPressure: BloodPressureEntry[];
   caloriesBurnedTotal: number | null; // Opcional, total calorias queimadas
-  steps: number | null; // opcional
+  steps: number | null; // opcional, passos dados no dia 
 }
 
 export interface WeightPoint {
