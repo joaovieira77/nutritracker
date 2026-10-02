@@ -44,7 +44,8 @@ The project was born from a real personal need while working with a nutritionist
 
 * Track different types of exercise
 * Record exercise duration
-* Optional: Record the calories burned
+* Optional  calories burned per exercise
+* Optional total calories burned per day and daily steps
 * Support multiple activities per day
 
 ### 😴 Sleep
@@ -55,13 +56,13 @@ The project was born from a real personal need while working with a nutritionist
 ### 💧 Water
 
 * Quick `+1 cup (250ml)` logging
+* Quick `-1 cup (250ml)` logging and full reset
 * Add custom water amounts
 * Track daily water intake
 
 ### ⚖️ Weight
 
 * Optional weight tracking
-* Optional total calories burned per day
 * Visualize weight evolution over time
 
 ### 🩸 Blood Pressure
