@@ -98,7 +98,7 @@ export default function TodayTab() {
       </header>
 
       <div className="lg:flex lg:items-start lg:gap-8">
-        {/* Coluna esquerda ~58%: totals + refeições */}
+      
         <div className="lg:w-[58%]">
           {/* Totals hero */}
           <div className="relative overflow-hidden rounded-[18px] border border-border bg-surface p-5 px-[18px] lg:rounded-[22px] lg:p-8">
@@ -170,7 +170,7 @@ export default function TodayTab() {
           </div>
         </div>
 
-        {/* Coluna direita ~42%: registos rápidos */}
+        
         <div className="mt-[26px] lg:mt-0 lg:w-[42%] lg:space-y-5">
           <div>
             <SectionTitle className="lg:mb-2 lg:mt-0 lg:text-xs lg:uppercase lg:tracking-wide">Água</SectionTitle>
@@ -421,9 +421,7 @@ export default function TodayTab() {
             </div>
           </div>
 
-          <div className="mb-1 mt-[22px] text-center text-[11px] leading-relaxed text-textfaint lg:mt-2 lg:text-left">
-            Os dados ficam guardados neste browser (localStorage), sem sincronização com outros dispositivos.
-          </div>
+      
         </div>
       </div>
 
