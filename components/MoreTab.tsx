@@ -7,8 +7,15 @@ import { getRecipes, deleteRecipe, recipeAsFood } from "@/lib/recipes";
 import { exportBackup, importBackup } from "@/lib/backup";
 import CreateFoodModal from "./modals/CreateFoodModal";
 import RecipeBuilderModal from "./modals/RecipeBuilderModal";
+import type { Tab } from "./BottomNav";
 
-export default function MoreTab() {
+const SHORTCUTS: { tab: Tab; label: string }[] = [
+  { tab: "steps", label: "Passos" },
+  { tab: "sleep", label: "Sono" },
+  { tab: "calories", label: "Calorias" },
+];
+
+export default function MoreTab({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   const [customFoods, setCustomFoods] = useState<Food[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [showCreateFood, setShowCreateFood] = useState(false);
@@ -50,6 +57,25 @@ export default function MoreTab() {
         <span className="h-2.5 w-2.5 rounded-full bg-red" />
         Mais
       </header>
+
+      {/* Atalhos: só em mobile, porque em desktop estão na sidebar */}
+      <div className="mb-[26px] lg:hidden">
+        <h2 className="mb-2.5 font-display text-sm font-semibold text-textmuted">Evolução</h2>
+        <div className="rounded-card border border-border bg-surface">
+          {SHORTCUTS.map((s, i) => (
+            <button
+              key={s.tab}
+              onClick={() => onNavigate(s.tab)}
+              className={`flex w-full items-center justify-between px-4 py-3.5 text-left text-[14px] ${
+                i > 0 ? "border-t border-border" : ""
+              }`}
+            >
+              <span>{s.label}</span>
+              <span className="text-textfaint">›</span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Custom foods */}
       <h2 className="mb-2.5 font-display text-sm font-semibold text-textmuted">Alimentos personalizados</h2>
